@@ -1,13 +1,12 @@
 package com.cart.management.models;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import lombok.*;
 
-@Component("productBean")
-@Scope("prototype")
+@Getter
+@Setter
+@AllArgsConstructor
 public class Product {
-
-    private long id;
+    private int id;
     private String name;
     private double price;
 }

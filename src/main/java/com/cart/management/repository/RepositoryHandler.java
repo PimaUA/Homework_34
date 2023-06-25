@@ -3,10 +3,11 @@ package com.cart.management.repository;
 import com.cart.management.models.Product;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
-public interface RepositoryHandler {
+public interface RepositoryHandler{
 
     Product getProductById(int id) throws ProductNotFound;
 
-    ArrayList<Product> getAllProducts();
+    HashSet<Product> getAllProducts();
 }
