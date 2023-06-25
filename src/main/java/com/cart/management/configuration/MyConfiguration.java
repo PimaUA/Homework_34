@@ -1,9 +1,19 @@
 package com.cart.management.configuration;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import com.cart.management.repository.ProductRepository;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Repository;
 
 @Configuration
-@ComponentScan("com.cart.management")
+@PropertySource("classpath:myApp.properties")
 public class MyConfiguration {
+
+@Bean
+
+ public ProductRepository repositoryBean(){
+    return new ProductRepository();
+ }
+
+
+
 }
