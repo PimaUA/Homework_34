@@ -40,12 +40,10 @@ public class Cart implements CartHandler {
                 System.out.println("input id");
                 int id = userInput.nextInt();
                 addProduct(id);
-                LOGGER.info("Product added");
             } else if (input.equals("--delete")) {
                 System.out.println("input id");
                 int id = userInput.nextInt();
                 deleteProduct(id);
-                LOGGER.info("Product deleted");
             } else if (input.equals("--close")) {
                 System.out.println("Good bye");
                 break;
@@ -59,19 +57,17 @@ public class Cart implements CartHandler {
     public void addProduct(int id) throws ProductNotFound {
         Product product = repository.getProductById(id);
         cartList.add(product);
-        LOGGER.info("Product " + product + " have been added to cart");
-        System.out.println(cartList);
+        LOGGER.info(product + " have been added to cart");
     }
 
     @Override
     public void deleteProduct(int id) throws ProductNotFound {
         Product product = repository.getProductById(id);
-        if(cartList.contains(product)){
-        this.cartList.remove(product);
-        LOGGER.info("Product " + product + " have been removed from cart");
-        System.out.println(cartList);}
-        else{
-            System.out.println("Product with id "+product.getId()+ " is not available in your cart");
+        if (cartList.contains(product)) {
+            this.cartList.remove(product);
+            LOGGER.info(product + " have been removed from cart");
+        } else {
+            System.out.println("Product with id " + product.getId() + " is not available in your cart");
         }
     }
 }

@@ -15,22 +15,22 @@ public class ProductRepository implements RepositoryHandler {
     private static final Logger LOGGER = LogManager.getLogger();
     private HashSet<Product> productsSet;
 
-@PostConstruct
+    @PostConstruct
     public void init() {
-         this.productsSet = new HashSet<>();
-        productsSet.add(new Product(1,"Tea", 35));
-        productsSet.add(new Product(2,"Coffee", 40));
-        productsSet.add(new Product( 3,"Donut", 20));
-        productsSet.add(new Product( 4,"Sandwich", 25));
-        productsSet.add(new Product( 5,"Juice", 30));
-        LOGGER.info("List of products created "+productsSet.toString());
+        this.productsSet = new HashSet<>();
+        productsSet.add(new Product(1, "Tea", 35));
+        productsSet.add(new Product(2, "Coffee", 40));
+        productsSet.add(new Product(3, "Donut", 20));
+        productsSet.add(new Product(4, "Sandwich", 25));
+        productsSet.add(new Product(5, "Juice", 30));
+        LOGGER.info("The following list of products created " + productsSet.toString());
     }
 
     @Override
     public Product getProductById(int id) throws ProductNotFound {
         for (Product eachProduct : productsSet) {
             if (eachProduct.getId() == id) {
-                System.out.println("Product received "+eachProduct);
+                LOGGER.info("Found in repository: " + eachProduct);
                 return eachProduct;
             }
         }
@@ -39,7 +39,7 @@ public class ProductRepository implements RepositoryHandler {
 
     @Override
     public HashSet<Product> getAllProducts() {
-        System.out.println("Whole set "+productsSet.toString());
+        LOGGER.info("List of all products " + productsSet.toString());
         return productsSet;
     }
 }
