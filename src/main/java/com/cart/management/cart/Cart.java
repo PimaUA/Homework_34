@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class Cart implements CartHandler {
     private static final Logger LOGGER = LogManager.getLogger();
     private final ArrayList<Product> cartList;
-    String input;
     @Autowired
     ProductRepository repository;
 
@@ -30,24 +29,24 @@ public class Cart implements CartHandler {
     @PostConstruct
     public void init() {
         System.out.println("Cart have been created.");
-        System.out.println("Enter command");
+        System.out.println("Enter command followed by Enter. Available commands are: --add,--delete,--close");
     }
 
     public void consoleApp() throws ProductNotFound {
-        while(true){
-        Scanner userInput = new Scanner(System.in);
-            input = userInput.nextLine();
-            if (input.equals("add")) {
+        while (true) {
+            Scanner userInput = new Scanner(System.in);
+            String input = userInput.nextLine();
+            if (input.equals("--add")) {
                 System.out.println("input id");
-                int id=userInput.nextInt();
+                int id = userInput.nextInt();
                 addProduct(id);
                 LOGGER.info("Product added");
-            } else if (input.equals("delete")) {
+            } else if (input.equals("--delete")) {
                 System.out.println("input id");
-                int id=userInput.nextInt();
+                int id = userInput.nextInt();
                 deleteProduct(id);
                 LOGGER.info("Product deleted");
-            } else if(input.equals("close")){
+            } else if (input.equals("--close")) {
                 System.out.println("Good bye");
                 break;
             } else {
@@ -60,16 +59,20 @@ public class Cart implements CartHandler {
     public void addProduct(int id) throws ProductNotFound {
         Product product = repository.getProductById(id);
         cartList.add(product);
-        LOGGER.info("Product "+product+" have been added to cart");
+        LOGGER.info("Product " + product + " have been added to cart");
         System.out.println(cartList);
     }
 
     @Override
     public void deleteProduct(int id) throws ProductNotFound {
-        Product product=repository.getProductById(id);
-        int idToDelete =product.getId();
-        this.cartList.remove(idToDelete);
-        LOGGER.info("Product "+product+" have been removed from cart");
+        Product product = repository.getProductById(id);
+        if(cartList.contains(product)){
+        this.cartList.remove(product);
+        LOGGER.info("Product " + product + " have been removed from cart");
+        System.out.println(cartList);}
+        else{
+            System.out.println("Product with id "+product.getId()+ " is not available in your cart");
+        }
     }
-    }
+}
 
