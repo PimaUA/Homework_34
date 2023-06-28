@@ -1,4 +1,4 @@
-package com.cart.management.models;
+package com.cart.management.entity;
 
 import lombok.*;
 

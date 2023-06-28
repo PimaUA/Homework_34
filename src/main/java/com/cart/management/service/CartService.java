@@ -1,30 +1,20 @@
-package com.cart.management.cart;
+package com.cart.management.service;
 
-import com.cart.management.models.Product;
+import com.cart.management.entity.Product;
+import com.cart.management.repository.ObjectRepository;
 import com.cart.management.repository.ProductNotFound;
-import com.cart.management.repository.ProductRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-@Component("cartBean")
+@Component("cartService")
 @Scope("prototype")
-public class Cart implements CartHandler {
-    private static final Logger LOGGER = LogManager.getLogger();
-    private final ArrayList<Product> cartList;
+public class CartService {
     @Autowired
-    ProductRepository repository;
-
-    public Cart(ArrayList<Product> cartList, ProductRepository repository) {
-        this.cartList = cartList;
-        this.repository = repository;
-    }
+    ObjectRepository <Product> repository;
 
     @PostConstruct
     public void init() {
@@ -53,22 +43,12 @@ public class Cart implements CartHandler {
         }
     }
 
-    @Override
     public void addProduct(int id) throws ProductNotFound {
-        Product product = repository.getProductById(id);
-        cartList.add(product);
-        LOGGER.info(product + " have been added to cart");
+        repository.addProduct(id);
     }
 
-    @Override
     public void deleteProduct(int id) throws ProductNotFound {
-        Product product = repository.getProductById(id);
-        if (cartList.contains(product)) {
-            this.cartList.remove(product);
-            LOGGER.info(product + " have been removed from cart");
-        } else {
-            System.out.println("Product with id " + product.getId() + " is not available in your cart");
-        }
+        repository.deleteProduct(id);
     }
 }
 
